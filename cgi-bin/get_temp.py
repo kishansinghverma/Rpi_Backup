@@ -5,10 +5,11 @@ import datetime
 import sqlite3
 
 conn = sqlite3.connect('log.db')
-time=datetime.datetime.now().strftime("%H:%M:%S")
-date=datetime.datetime.now().strftime("%d-%m-%Y")
+dht=conn.execute('select * from temp order by id desc limit 1;')
     
-humidity, temperature = Adafruit_DHT.read_retry(11, 4)
+
+for x in dht:
+    temperature=x[1]
+    humidity=x[2]
+    time=x[3]
 print("\n"+str(temperature)+"/"+str(humidity)+"/"+str(time))
-conn.execute('insert into temp values(null,'+str(temperature)+','+str(humidity)+',"'+time+'","'+date+'");')
-conn.commit()

@@ -1,20 +1,21 @@
 from time import sleep
-from gpiozero import Buzzer, InputDevice
+from gpiozero import InputDevice
+from firebase import firebase
  
-buzz    = Buzzer(13)
-no_rain = InputDevice(18)
- 
-def buzz_now(iterations):
-    for x in range(iterations):
-        buzz.on()
-        sleep(0.1)
-        buzz.off()
-        sleep(0.1)
- 
+sensor = InputDevice(12)
+
+firebase=firebase.FirebaseApplication('https://smarthomeautomation-1aa7c.firebaseio.com/',None)
+x=1
+
 while True:
-    if not no_rain.is_active:
-        print("It's raining - get the washing in!")
-        #buzz_now(5)
-        # insert your other code or functions here
-        # e.g. tweet, SMS, email, take a photo etc.
+    if not sensor.is_active :
+        if(x==0):
+            print("Tank Full!")
+            firebase.put('','/water',1)
+            x=1
+    else:
+        if(x==1):
+            print("Water Level Dropped!")
+            firebase.put('','/water',0)
+            x=0
     sleep(1)

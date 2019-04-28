@@ -1,4 +1,3 @@
-import sys
 import Adafruit_DHT
 import datetime
 import sqlite3
@@ -15,8 +14,9 @@ while True:
 
     if((ptemp != temperature) or (phmd != humidity)):
         conn.execute('insert into temp values(null,'+str(temperature)+','+str(humidity)+',"'+datetime.datetime.now().strftime("%H:%M:%S")+'","'+datetime.datetime.now().strftime("%d-%m-%Y")+'");')
-        conn.commit()
         ptemp=temperature
         phmd=humidity
-        
-    time.sleep(300)
+    else:
+        conn.execute("update temp set time='"+datetime.datetime.now().strftime("%H:%M:%S")+"' where id=(select id from temp order by id desc limit 1);")
+    conn.commit()
+    time.sleep(5)
