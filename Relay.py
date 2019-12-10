@@ -23,6 +23,8 @@ GPIO.output(pins[3], OFF)
 
     
 def switch(topic, msg):
+    print("Relay service initiated!")
+    
     if(topic=="post/bulb"):
         if(msg=="1"):
             GPIO.output(pins[0], ON)

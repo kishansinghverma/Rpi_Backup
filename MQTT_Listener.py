@@ -3,7 +3,7 @@ import time
 import Relay
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
+    print("Connected To MQTT Server")
     
     client.subscribe("post/bulb")
     client.subscribe("post/fan")
@@ -11,11 +11,12 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
-    print(msg.topic, msg.payload.decode())
     Relay.switch(msg.topic, msg.payload.decode())
     
 
-def listen():
+def startService():
+    print("MQTT Listener Service Started")
+    
     client = mqtt.Client()
     host = "klinux.tk"
     port = 1883
