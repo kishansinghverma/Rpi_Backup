@@ -1,23 +1,50 @@
-import paho.mqtt.client as mqtt
+  
+import RPi.GPIO as GPIO
+from time import sleep
 import time
+import MQTT_Publisher
 
-def on_connect(client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+pins = [1, 7, 8, 25]
+GPIO.setup(pins[0], GPIO.OUT)
+GPIO.setup(pins[1], GPIO.OUT)
+GPIO.setup(pins[2], GPIO.OUT)
+GPIO.setup(pins[3], GPIO.OUT)
+
+OFF=GPIO.HIGH
+ON=GPIO.LOW
+
+GPIO.output(pins[0], OFF)
+GPIO.output(pins[1], OFF)
+GPIO.output(pins[2], OFF)
+GPIO.output(pins[3], OFF)
+
     
-    client.subscribe("bulb")
-    client.subscribe("fan")
-    client.subscribe("motor")
-
-
-def on_message(client, userdata, msg):
-    print(msg.topic, msg.payload.decode())
-
-
-client = mqtt.Client()
-host = "klinux.tk"
-port = 1883
-
-client.connect(host, port, 60)
-client.on_connect = on_connect
-client.on_message = on_message
-client.loop_forever()
+def switch(topic, msg):
+    if(topic=="post/bulb"):
+        if(msg=="1"):
+            GPIO.output(pins[0], ON)
+        else:
+            GPIO.output(pins[0], OFF)
+    
+        MQTT_Publisher.publish("get/bulb", msg)
+        
+    elif(topic=="post/fan"):
+        if(msg=="1"):
+            GPIO.output(pins[1], ON)
+        else:
+            GPIO.output(pins[1], OFF)
+    
+        MQTT_Publisher.publish("get/fan", msg)
+        
+    elif(topic=="post/motor"):
+        if(msg=="1"):
+            GPIO.output(pins[2], ON)
+        else:
+            GPIO.output(pins[2], OFF)
+    
+        MQTT_Publisher.publish("get/motor", msg)
+        
+        

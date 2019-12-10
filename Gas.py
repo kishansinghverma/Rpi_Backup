@@ -1,11 +1,9 @@
 import time, sys
 import RPi.GPIO as GPIO
-from firebase import firebase
+import MQTT_Publisher
  
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(37, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-firebase=firebase.FirebaseApplication('https://smarthomeautomation-1aa7c.firebaseio.com/',None)
 
 x=0
 def action(pin):
@@ -13,9 +11,9 @@ def action(pin):
     x += 1
     if(x==2):
         print('Smoke Detected!!')
-        firebase.put('','/smoke',1)
+        MQTT_Publisher.publish("get/gas", "1")
         time.sleep(10)
-        firebase.put('','/smoke',0)
+        MQTT_Publisher.publish("get/gas", "0")
         x=0
         return
  
