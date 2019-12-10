@@ -2,16 +2,16 @@ import time, sys
 import RPi.GPIO as GPIO
 import MQTT_Publisher
  
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(37, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 x=0
 
 def startService():
-    print("Gas monitoring Service Started!")
+    print(">> Gas monitoring Service Started!")
     
-    GPIO.add_event_detect(37, GPIO.RISING)
-    GPIO.add_event_callback(37, action)
+    GPIO.add_event_detect(26, GPIO.RISING)
+    GPIO.add_event_callback(26, action)
     try:
         while True:
             time.sleep(0.5)

@@ -5,7 +5,7 @@ import Firebase_Publisher
     
 
 def startService():
-    print("Temperature Monitoring Service Started!")
+    print(">> Temperature Monitoring Service Started!")
     
     h=0; t=0
     

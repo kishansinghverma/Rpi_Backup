@@ -14,3 +14,19 @@ def publish(temp, humidity):
     db=firebase.database()
     data={"temperature":temp, "humidity":humidity}
     db.child("dht").push(data)
+    
+    count=len(db.child("dht").get().val())
+    
+    for x in db.child("dht").get().val():
+        if(count<=30):
+            break
+        
+        db.child("dht").child(str(x)).remove()
+        count -= 1
+
+
+
+    
+
+    
+    

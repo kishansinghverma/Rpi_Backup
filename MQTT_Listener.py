@@ -15,7 +15,7 @@ def on_message(client, userdata, msg):
     
 
 def startService():
-    print("MQTT Listener Service Started")
+    print(">> MQTT Listener Service Started")
     
     client = mqtt.Client()
     host = "klinux.tk"

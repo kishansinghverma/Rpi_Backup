@@ -4,7 +4,7 @@ import MQTT_Publisher
 import Relay
 
 def startService():
-    print("Water Level Monitoring Started!")
+    print(">> Water Level Monitoring Started!")
     
     sensor = InputDevice(12)
     x=1
