@@ -1,11 +1,12 @@
 import paho.mqtt.client as mqtt
 import Firebase_Publisher
+import Connection
 
 def publish(topic, msg):
     print("Publishing to the given topic!")
     
-    host="klinux.tk"
-    port=1883
+    host=Connection.host
+    port=Connection.port
     
     client = mqtt.Client()
     client.connect(host, port, 60)

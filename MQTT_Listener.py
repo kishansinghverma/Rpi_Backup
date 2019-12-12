@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import time
 import Relay
+import Connection
 
 def on_connect(client, userdata, flags, rc):
     print("Connected To MQTT Server")
@@ -17,8 +18,8 @@ def on_message(client, userdata, msg):
 def startService():
     print(">> MQTT Listener Service Started")
     
-    host="klinux.tk"
-    port=1883
+    host=Connection.host
+    port=Connection.port
     
     client = mqtt.Client()
     client.connect(host, port, 60)
