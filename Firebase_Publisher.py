@@ -1,3 +1,4 @@
+import time
 from firebase import Firebase
 
 config = {
@@ -6,6 +7,13 @@ config = {
   "databaseURL": "https://smarthomeautomation-1aa7c.firebaseio.com/",
   "storageBucket": "smarthomeautomation-1aa7c.appspot.com"
 }
+
+def setTime():
+    
+    firebase = Firebase(config)
+    db=firebase.database()
+    db.child("time").set(int(time.time()))
+    
 
 def publish(temp, humidity):
     print("Publising to firebase!")
@@ -23,8 +31,10 @@ def publish(temp, humidity):
         
         db.child("dht").child(str(x)).remove()
         count -= 1
+        
+    setTime()
 
-
+    
 
     
 

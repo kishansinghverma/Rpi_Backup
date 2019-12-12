@@ -6,7 +6,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 x=0
-
 def startService():
     print(">> Gas monitoring Service Started!")
     

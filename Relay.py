@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 import time
 import MQTT_Publisher
+import Water
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -43,10 +44,12 @@ def switch(topic, msg):
         
     elif(topic=="post/motor"):
         if(msg=="1"):
-            GPIO.output(pins[2], ON)
+            if(Water.status==0):
+                GPIO.output(pins[2], ON)
+                MQTT_Publisher.publish("get/motor", msg)
         else:
             GPIO.output(pins[2], OFF)
-    
-        MQTT_Publisher.publish("get/motor", msg)
+            MQTT_Publisher.publish("get/motor", msg)
+
         
         

@@ -1,12 +1,16 @@
 import paho.mqtt.client as mqtt
+import Firebase_Publisher
 
 def publish(topic, msg):
     print("Publishing to the given topic!")
     
+    host="klinux.tk"
+    port=1883
+    
     client = mqtt.Client()
-    host = "klinux.tk"
-    port = 1883
     client.connect(host, port, 60)
     client.publish(topic,msg,retain=True)
     client.disconnect()
+    
+    Firebase_Publisher.setTime()
     
