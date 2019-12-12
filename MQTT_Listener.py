@@ -22,7 +22,7 @@ def startService():
     port=Connection.port
     
     client = mqtt.Client()
-    client.connect(host, port, 60)
+    client.connect(host, port, 600)
     client.on_connect = on_connect
     client.on_message = on_message
     client.loop_forever()
